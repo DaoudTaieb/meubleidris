@@ -47,7 +47,7 @@ const toggleSidebar = () => {
                     <div class="pb-2 px-4 text-[10px] font-bold text-[#706f6c] uppercase tracking-widest">Opérations</div>
 
                     <Link 
-                        href="/" 
+                        href="/dashboard" 
                         :class="[
                             'flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition-all',
                             $page.component === 'Dashboard' ? 'bg-brand-gold/10 text-brand-gold' : 'text-[#706f6c] hover:bg-[#f8f8f7]'
@@ -77,6 +77,17 @@ const toggleSidebar = () => {
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
                         <span>Stock</span>
+                    </Link>
+
+                    <Link 
+                        href="/statistiques" 
+                        :class="[
+                            'flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition-all',
+                            $page.component === 'Statistics' ? 'bg-brand-gold/10 text-brand-gold' : 'text-[#706f6c] hover:bg-[#f8f8f7]'
+                        ]"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="18" y1="20" y2="10"/><line x1="12" x2="12" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/></svg>
+                        <span>Statistiques</span>
                     </Link>
                 </nav>
 

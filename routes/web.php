@@ -12,7 +12,9 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('/', function () {
+    Route::get('/', fn () => redirect()->route('stock.index'));
+
+    Route::get('/dashboard', function () {
         $fournisseurs = DB::table('fournisseurs')
             ->leftJoin('fournisseurfamilles', 'fournisseurs.fournisseurfamilleid', '=', 'fournisseurfamilles.fournisseurfamilleid')
             ->select('fournisseurs.*', 'fournisseurfamilles.fournisseurfamillelibelle as famille')
@@ -35,7 +37,7 @@ Route::middleware('auth')->group(function () {
         return \Inertia\Inertia::render('Dashboard', [
             'fournisseurs' => $fournisseurs
         ]);
-    });
+    })->name('dashboard');
 
     Route::get('/fournisseur/{id}/releve', function ($id) {
         $fournisseur = DB::table('fournisseurs')
@@ -223,4 +225,5 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/stock', [\App\Http\Controllers\StockController::class, 'index'])->name('stock.index');
 
+    Route::get('/statistiques', [\App\Http\Controllers\StatisticsController::class, 'index'])->name('statistiques.index');
 });

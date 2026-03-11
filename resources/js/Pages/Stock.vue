@@ -121,9 +121,9 @@ const formatCurrency = (val) => {
                 </div>
 
                 <!-- Main Data Grid -->
-                <div class="lg:col-span-3 space-y-6">
-                    <div class="bg-white rounded-[1.5rem] md:rounded-[2rem] border border-[#e3e3e0] shadow-sm overflow-hidden">
-                        <div class="p-6 border-b border-[#f0f0f0] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div class="lg:col-span-3 space-y-6 min-w-0">
+                    <div class="bg-white rounded-[1.5rem] md:rounded-[2rem] border border-[#e3e3e0] shadow-sm overflow-hidden flex flex-col min-h-0">
+                        <div class="p-6 border-b border-[#f0f0f0] flex flex-col sm:flex-row sm:items-center justify-between gap-4 flex-shrink-0">
                             <h3 class="font-bold text-brand-charcoal">Produits en Stock ({{ stocks.length }})</h3>
                             <div class="relative w-full sm:w-auto">
                                 <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-[#706f6c]" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
@@ -131,49 +131,54 @@ const formatCurrency = (val) => {
                             </div>
                         </div>
 
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left">
+                        <div class="overflow-y-auto max-h-[70vh]">
+                            <table class="w-full text-left table-fixed">
                                 <thead>
                                     <tr class="text-[10px] font-bold text-[#706f6c] uppercase tracking-widest bg-[#fdfdfc] border-b border-[#f0f0f0]">
-                                        <th class="px-6 py-5">Produit</th>
-                                        <th class="px-6 py-5 hidden md:table-cell">Famille</th>
-                                        <th class="px-6 py-5 hidden sm:table-cell">Site / Dépôt</th>
-                                        <th class="px-6 py-5 text-right">Quantité</th>
+                                        <th class="px-3 py-4 w-[22%]">Produit</th>
+                                        <th class="px-3 py-4 w-[18%]">Famille</th>
+                                        <th class="px-3 py-4 w-[12%]">Site / Dépôt</th>
+                                        <th class="px-3 py-4 w-[10%] text-right">Qte par site</th>
+                                        <th class="px-3 py-4 w-[18%] text-right">Prix unitaire TTC</th>
+                                        <th class="px-3 py-4 w-[20%] text-right">Valeur stock TTC</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-[#f0f0f0]">
                                     <tr v-for="s in stocks" :key="s.stockid" class="hover:bg-[#fcfcfb] group transition-colors">
-                                        <td class="px-6 py-5">
-                                            <div class="flex flex-col">
-                                                <span class="font-bold text-brand-charcoal group-hover:text-brand-gold transition-colors leading-tight text-sm md:text-base">{{ s.produit?.produitlibelle }}</span>
-                                                <div class="flex items-center gap-2 mt-0.5">
-                                                    <span class="text-[10px] text-[#706f6c] font-mono">{{ s.produit?.produitcode }}</span>
-                                                    <span class="sm:hidden text-[10px] text-brand-gold font-bold px-1.5 py-0.5 bg-brand-gold/5 rounded capitalize">@ {{ s.site?.sitelibelle || 'Dépôt' }}</span>
-                                                </div>
+                                        <td class="px-3 py-3 align-top">
+                                            <div class="min-w-0 break-words">
+                                                <span class="font-bold text-brand-charcoal group-hover:text-brand-gold transition-colors leading-tight text-sm">{{ s.produit?.produitlibelle }}</span>
+                                                <span class="block text-[10px] text-[#706f6c] font-mono mt-0.5">{{ s.produit?.produitcode }}</span>
                                             </div>
                                         </td>
-                                        <td class="px-6 py-5 hidden md:table-cell">
-                                            <div class="flex flex-col">
+                                        <td class="px-3 py-3 align-top">
+                                            <div class="min-w-0 break-words">
                                                 <span class="text-xs font-bold text-brand-charcoal">{{ s.produit?.famille?.famillelibelle }}</span>
-                                                <span class="text-[10px] text-[#706f6c]">{{ s.produit?.sousfamille?.sousfamillelibelle }}</span>
+                                                <span class="block text-[10px] text-[#706f6c]">{{ s.produit?.sousfamille?.sousfamillelibelle }}</span>
                                             </div>
                                         </td>
-                                        <td class="px-6 py-5">
-                                            <span class="px-3 py-1 bg-[#f8f8f7] rounded-lg text-[10px] font-bold text-brand-charcoal border border-[#e3e3e0] uppercase tracking-wider">
+                                        <td class="px-3 py-3 align-top">
+                                            <span class="inline-block px-2 py-0.5 bg-[#f8f8f7] rounded-lg text-[10px] font-bold text-brand-charcoal border border-[#e3e3e0] uppercase tracking-wider break-words">
                                                 {{ s.site?.sitelibelle || 'Dépôt Central' }}
                                             </span>
                                         </td>
-                                        <td class="px-6 py-5 text-right">
+                                        <td class="px-3 py-3 text-right align-top">
                                             <span :class="[
-                                                parseFloat(s.qtestock) <= 0 ? 'text-red-500 bg-red-50' : 'text-brand-gold bg-brand-gold/5',
-                                                'px-3 py-1.5 rounded-xl font-black text-sm md:text-base tabular-nums border border-transparent'
+                                                parseFloat(s.qte_affichee ?? s.qtestock) <= 0 ? 'text-red-500 bg-red-50' : 'text-brand-gold bg-brand-gold/5',
+                                                'inline-block px-2 py-1 rounded-lg font-black text-sm tabular-nums'
                                             ]">
-                                                {{ s.qtestock }}
+                                                {{ s.qte_affichee ?? s.qtestock ?? 0 }}
                                             </span>
+                                        </td>
+                                        <td class="px-3 py-3 text-right font-mono text-sm tabular-nums align-top">
+                                            {{ formatCurrency(s.prixunitairettc ?? 0) }}
+                                        </td>
+                                        <td class="px-3 py-3 text-right font-mono font-bold text-brand-charcoal text-sm tabular-nums align-top">
+                                            {{ formatCurrency(s.valeurstockttc ?? 0) }}
                                         </td>
                                     </tr>
                                     <tr v-if="stocks.length === 0">
-                                        <td colspan="4" class="px-6 py-20 text-center">
+                                        <td colspan="6" class="px-6 py-20 text-center">
                                             <div class="flex flex-col items-center gap-4 text-[#706f6c]">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="opacity-20"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
                                                 <p class="font-bold">Aucun produit trouvé avec ces critères</p>

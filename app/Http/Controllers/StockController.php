@@ -14,10 +14,10 @@ class StockController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Stock::select('stockid', 'produitid', 'siteid', 'qtestock')
+        $query = Stock::select('stockid', 'produitid', 'siteid', 'qtestock', 'stockvirtuel', 'valeurstockttc')
             ->with([
                 'produit' => function ($q) {
-                    $q->select('produitid', 'produitlibelle', 'produitcode', 'familleid', 'sousfamilleid', 'fournisseurid', 'pmarque');
+                    $q->select('produitid', 'produitlibelle', 'produitcode', 'familleid', 'sousfamilleid', 'fournisseurid', 'pmarque', 'ht_vente', 'ttc_vente');
                 },
                 'produit.famille:familleid,famillelibelle',
                 'produit.sousfamille:sousfamilleid,sousfamillelibelle',
@@ -64,6 +64,26 @@ class StockController extends Controller
         }
 
         $stocks = $query->get();
+
+        foreach ($stocks as $stock) {
+            // Prix unitaire TTC : colonne ttc_vente de la table produits (pas prixventeht)
+            $stock->prixunitairettc = round((float) ($stock->produit->ttc_vente ?? 0), 3);
+            // Quantité affichée : qtestock ou stockvirtuel en secours
+            $qte = (float) ($stock->qtestock ?: $stock->stockvirtuel ?? 0);
+            $stock->qte_affichee = $qte;
+            // Valeur stock TTC : colonne en base si > 0, sinon qte × prix unitaire TTC
+            $valeurDb = (float) ($stock->valeurstockttc ?? 0);
+            if ($valeurDb > 0) {
+                $stock->valeurstockttc = round($valeurDb, 3);
+            } else {
+                $stock->valeurstockttc = round($qte * $stock->prixunitairettc, 3);
+            }
+        }
+
+        // Ne garder que les lignes qui ont des données dans le tableau (qte, prix ou valeur > 0)
+        $stocks = $stocks->filter(function ($stock) {
+            return ($stock->qte_affichee > 0) || ($stock->prixunitairettc > 0) || ($stock->valeurstockttc > 0);
+        })->values();
 
         return Inertia::render('Stock', [
             'stocks' => $stocks,
