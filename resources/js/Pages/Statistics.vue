@@ -69,7 +69,7 @@ const debouncedLoadMonth = debounce(loadWithMonth, 400);
 <template>
     <MainLayout>
         <Head title="Statistiques" />
-        <div class="p-4 md:p-8 lg:p-12">
+        <div class="p-4 sm:p-6 md:p-8 lg:p-12 pb-8 safe-bottom">
             <header class="mb-8">
                 <h2 class="text-2xl md:text-3xl font-extrabold text-brand-charcoal tracking-tight mb-1">Statistiques</h2>
                 <p class="text-sm md:text-base text-[#706f6c] font-medium">État de journée, journal de caisse et rapport mensuel</p>
@@ -130,32 +130,32 @@ const debouncedLoadMonth = debounce(loadWithMonth, 400);
                             <p class="text-xl font-black text-brand-charcoal">{{ formatCurrency(journeeTotaux?.total_depense) }}</p>
                         </div>
                     </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left">
+                    <div class="overflow-x-auto table-scroll">
+                        <table class="w-full text-left min-w-[520px]">
                             <thead>
                                 <tr class="text-[10px] font-bold text-[#706f6c] uppercase tracking-widest bg-[#fdfdfc] border-t border-[#f0f0f0]">
-                                    <th class="px-6 py-4">Caisse / Site</th>
-                                    <th class="px-6 py-4">Ouverture</th>
-                                    <th class="px-6 py-4">Clôture</th>
-                                    <th class="px-6 py-4 text-right">Fond</th>
-                                    <th class="px-6 py-4 text-right">Clôture</th>
-                                    <th class="px-6 py-4 text-right">Théorique</th>
-                                    <th class="px-6 py-4"></th>
+                                    <th class="px-3 sm:px-6 py-4">Caisse / Site</th>
+                                    <th class="px-3 sm:px-6 py-4 hidden sm:table-cell">Ouverture</th>
+                                    <th class="px-3 sm:px-6 py-4 hidden md:table-cell">Clôture</th>
+                                    <th class="px-3 sm:px-6 py-4 text-right">Fond</th>
+                                    <th class="px-3 sm:px-6 py-4 text-right">Clôture</th>
+                                    <th class="px-3 sm:px-6 py-4 text-right hidden lg:table-cell">Théorique</th>
+                                    <th class="px-3 sm:px-6 py-4"></th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-[#f0f0f0]">
                                 <tr v-for="s in journeeSessions" :key="s.journalcaisseid" class="hover:bg-[#fcfcfb]">
-                                    <td class="px-6 py-4">
+                                    <td class="px-3 sm:px-6 py-4">
                                         <span class="font-bold text-brand-charcoal">{{ s.caisse_libelle || '—' }}</span>
                                         <span class="block text-[10px] text-[#706f6c]">{{ s.site_libelle || '—' }}</span>
                                     </td>
-                                    <td class="px-6 py-4 text-sm">{{ formatDate(s.dateouverture) }}</td>
-                                    <td class="px-6 py-4 text-sm">{{ formatDate(s.datecloture) }}</td>
-                                    <td class="px-6 py-4 text-right font-mono">{{ formatCurrency(s.fondcaisse) }}</td>
-                                    <td class="px-6 py-4 text-right font-mono">{{ formatCurrency(s.montantcloture) }}</td>
-                                    <td class="px-6 py-4 text-right font-mono">{{ formatCurrency(s.montanttheorique) }}</td>
-                                    <td class="px-6 py-4">
-                                        <button @click="selectJournal(s.journalcaisseid)" class="text-brand-gold font-bold text-sm hover:underline">Voir journal</button>
+                                    <td class="px-3 sm:px-6 py-4 text-xs sm:text-sm hidden sm:table-cell">{{ formatDate(s.dateouverture) }}</td>
+                                    <td class="px-3 sm:px-6 py-4 text-xs hidden md:table-cell">{{ formatDate(s.datecloture) }}</td>
+                                    <td class="px-3 sm:px-6 py-4 text-right font-mono text-xs sm:text-sm">{{ formatCurrency(s.fondcaisse) }}</td>
+                                    <td class="px-3 sm:px-6 py-4 text-right font-mono text-xs sm:text-sm">{{ formatCurrency(s.montantcloture) }}</td>
+                                    <td class="px-3 sm:px-6 py-4 text-right font-mono text-xs hidden lg:table-cell">{{ formatCurrency(s.montanttheorique) }}</td>
+                                    <td class="px-3 sm:px-6 py-4">
+                                        <button @click="selectJournal(s.journalcaisseid)" class="text-brand-gold font-bold text-xs sm:text-sm hover:underline whitespace-nowrap">Voir journal</button>
                                     </td>
                                 </tr>
                                 <tr v-if="!journeeSessions?.length">
@@ -184,26 +184,26 @@ const debouncedLoadMonth = debounce(loadWithMonth, 400);
                     <div class="p-6 border-b border-[#f0f0f0]">
                         <h3 class="font-bold text-brand-charcoal">Lignes du journal</h3>
                     </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left table-fixed">
+                    <div class="overflow-x-auto table-scroll">
+                        <table class="w-full text-left min-w-[400px]">
                             <thead>
                                 <tr class="text-[10px] font-bold text-[#706f6c] uppercase tracking-widest bg-[#fdfdfc] border-b border-[#f0f0f0]">
-                                    <th class="px-4 py-4 w-[30%]">Libellé</th>
-                                    <th class="px-4 py-4 w-[15%]">Section</th>
-                                    <th class="px-4 py-4 w-[15%] text-right">Valeur</th>
-                                    <th class="px-4 py-4 w-[15%] text-right">Achat TTC</th>
-                                    <th class="px-4 py-4 w-[15%] text-right">Marge TTC</th>
-                                    <th class="px-4 py-4 w-[10%] text-right">Qte</th>
+                                    <th class="px-3 sm:px-4 py-4 min-w-[120px]">Libellé</th>
+                                    <th class="px-3 sm:px-4 py-4 min-w-[80px] hidden sm:table-cell">Section</th>
+                                    <th class="px-3 sm:px-4 py-4 min-w-[70px] text-right">Valeur</th>
+                                    <th class="px-3 sm:px-4 py-4 min-w-[70px] text-right hidden md:table-cell">Achat TTC</th>
+                                    <th class="px-3 sm:px-4 py-4 min-w-[70px] text-right hidden md:table-cell">Marge TTC</th>
+                                    <th class="px-3 sm:px-4 py-4 min-w-[50px] text-right hidden lg:table-cell">Qte</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-[#f0f0f0]">
                                 <tr v-for="l in journalLignes" :key="l.journalcaissedetid" class="hover:bg-[#fcfcfb]">
-                                    <td class="px-4 py-3 break-words">{{ l.libelle }}</td>
-                                    <td class="px-4 py-3 text-sm">{{ l.section_libelle || '—' }}</td>
-                                    <td class="px-4 py-3 text-right font-mono">{{ formatCurrency(l.valeur) }}</td>
-                                    <td class="px-4 py-3 text-right font-mono">{{ formatCurrency(l.achatttc) }}</td>
-                                    <td class="px-4 py-3 text-right font-mono">{{ formatCurrency(l.margettc) }}</td>
-                                    <td class="px-4 py-3 text-right">{{ l.qte != null ? l.qte : '—' }}</td>
+                                    <td class="px-3 sm:px-4 py-3 break-words text-xs sm:text-sm">{{ l.libelle }}</td>
+                                    <td class="px-3 sm:px-4 py-3 text-xs hidden sm:table-cell">{{ l.section_libelle || '—' }}</td>
+                                    <td class="px-3 sm:px-4 py-3 text-right font-mono text-xs sm:text-sm">{{ formatCurrency(l.valeur) }}</td>
+                                    <td class="px-3 sm:px-4 py-3 text-right font-mono text-xs hidden md:table-cell">{{ formatCurrency(l.achatttc) }}</td>
+                                    <td class="px-3 sm:px-4 py-3 text-right font-mono text-xs hidden md:table-cell">{{ formatCurrency(l.margettc) }}</td>
+                                    <td class="px-3 sm:px-4 py-3 text-right text-xs hidden lg:table-cell">{{ l.qte != null ? l.qte : '—' }}</td>
                                 </tr>
                                 <tr v-if="journalEntete && !journalLignes?.length">
                                     <td colspan="6" class="px-6 py-8 text-center text-[#706f6c]">Aucune ligne pour cette session.</td>

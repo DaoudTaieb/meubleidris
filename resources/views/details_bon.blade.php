@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>Détails {{ $type }} #{{ $numero }}</title>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -22,8 +22,9 @@
             font-family: 'Instrument Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
             background-color: var(--background);
             color: var(--text);
-            padding: 2rem;
+            padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
         }
+        @media (min-width: 640px) { body { padding: 2rem; } }
 
         .container {
             max-width: 1200px;

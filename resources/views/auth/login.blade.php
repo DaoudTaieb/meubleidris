@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>Connexion - Molka Moden</title>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -25,16 +25,23 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
+            min-height: 100dvh;
+            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+            box-sizing: border-box;
         }
 
         .login-card {
             background: var(--surface);
-            padding: 2.5rem;
+            padding: 1.5rem;
             border-radius: 16px;
             border: 1px solid var(--border);
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
             width: 100%;
             max-width: 400px;
+            margin: 1rem;
+        }
+        @media (min-width: 640px) {
+            .login-card { padding: 2.5rem; }
         }
 
         .logo {

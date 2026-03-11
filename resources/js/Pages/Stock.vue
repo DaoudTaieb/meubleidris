@@ -48,7 +48,7 @@ const formatCurrency = (val) => {
     <MainLayout>
         <Head title="Gestion du Stock" />
         
-        <div class="p-4 md:p-8 lg:p-12">
+        <div class="p-4 sm:p-6 md:p-8 lg:p-12 pb-8 safe-bottom">
             <header class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 md:mb-12">
                 <div>
                     <h2 class="text-2xl md:text-3xl font-extrabold text-brand-charcoal tracking-tight mb-1">État de Stock</h2>
@@ -131,16 +131,45 @@ const formatCurrency = (val) => {
                             </div>
                         </div>
 
-                        <div class="overflow-y-auto max-h-[70vh]">
-                            <table class="w-full text-left table-fixed">
+                        <!-- Mobile: cartes | Desktop: tableau -->
+                        <div class="block md:hidden overflow-y-auto max-h-[65vh] space-y-3 p-4">
+                            <div v-for="s in stocks" :key="s.stockid" class="bg-[#fdfdfc] rounded-xl border border-[#e3e3e0] p-4 shadow-sm">
+                                <div class="flex justify-between items-start gap-2 mb-2">
+                                    <div class="min-w-0 flex-1">
+                                        <p class="font-bold text-brand-charcoal text-sm leading-tight truncate">{{ s.produit?.produitlibelle }}</p>
+                                        <p class="text-[10px] text-[#706f6c] font-mono">{{ s.produit?.produitcode }}</p>
+                                    </div>
+                                    <span :class="[
+                                        parseFloat(s.qte_affichee ?? s.qtestock) <= 0 ? 'text-red-600 bg-red-50' : 'text-brand-gold bg-brand-gold/10',
+                                        'shrink-0 px-2 py-1 rounded-lg font-black text-xs tabular-nums'
+                                    ]">{{ s.qte_affichee ?? s.qtestock ?? 0 }}</span>
+                                </div>
+                                <div class="flex flex-wrap gap-2 text-[10px] text-[#706f6c]">
+                                    <span>{{ s.produit?.famille?.famillelibelle }}</span>
+                                    <span>·</span>
+                                    <span>{{ s.site?.sitelibelle || 'Dépôt' }}</span>
+                                </div>
+                                <div class="mt-3 pt-3 border-t border-[#f0f0f0] flex justify-between text-xs">
+                                    <span class="text-[#706f6c]">P.U TTC</span>
+                                    <span class="font-mono font-bold">{{ formatCurrency(s.prixunitairettc ?? 0) }}</span>
+                                </div>
+                                <div class="flex justify-between text-xs mt-1">
+                                    <span class="text-[#706f6c]">Valeur TTC</span>
+                                    <span class="font-mono font-bold text-brand-charcoal">{{ formatCurrency(s.valeurstockttc ?? 0) }}</span>
+                                </div>
+                            </div>
+                            <div v-if="stocks.length === 0" class="py-12 text-center text-[#706f6c] text-sm">Aucun produit avec ces critères.</div>
+                        </div>
+                        <div class="hidden md:block overflow-y-auto max-h-[70vh] table-scroll">
+                            <table class="w-full text-left">
                                 <thead>
                                     <tr class="text-[10px] font-bold text-[#706f6c] uppercase tracking-widest bg-[#fdfdfc] border-b border-[#f0f0f0]">
-                                        <th class="px-3 py-4 w-[22%]">Produit</th>
-                                        <th class="px-3 py-4 w-[18%]">Famille</th>
-                                        <th class="px-3 py-4 w-[12%]">Site / Dépôt</th>
-                                        <th class="px-3 py-4 w-[10%] text-right">Qte par site</th>
-                                        <th class="px-3 py-4 w-[18%] text-right">Prix unitaire TTC</th>
-                                        <th class="px-3 py-4 w-[20%] text-right">Valeur stock TTC</th>
+                                        <th class="px-3 py-4 min-w-[140px]">Produit</th>
+                                        <th class="px-3 py-4 min-w-[100px]">Famille</th>
+                                        <th class="px-3 py-4 min-w-[80px]">Site</th>
+                                        <th class="px-3 py-4 min-w-[70px] text-right">Qte</th>
+                                        <th class="px-3 py-4 min-w-[90px] text-right">P.U TTC</th>
+                                        <th class="px-3 py-4 min-w-[100px] text-right">Valeur TTC</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-[#f0f0f0]">

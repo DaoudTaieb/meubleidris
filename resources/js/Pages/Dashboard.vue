@@ -15,7 +15,7 @@ const formatCurrency = (val) => {
     <MainLayout>
         <Head title="Fournisseurs" />
         
-        <div class="p-4 md:p-8 lg:p-12">
+        <div class="p-4 sm:p-6 md:p-8 lg:p-12 pb-8 safe-bottom">
             <header class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 md:mb-12">
                 <div>
                     <h2 class="text-2xl md:text-3xl font-extrabold text-[#1b1b18] tracking-tight mb-1">Tableau de bord</h2>
@@ -52,8 +52,8 @@ const formatCurrency = (val) => {
                     </div>
                 </div>
                 
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left">
+                <div class="overflow-x-auto table-scroll">
+                    <table class="w-full text-left min-w-[500px]">
                         <thead>
                             <tr class="text-[10px] font-bold text-[#706f6c] uppercase tracking-widest bg-[#fdfdfc] border-b border-[#f0f0f0]">
                                 <th class="px-4 md:px-8 py-5 hidden md:table-cell">Code</th>

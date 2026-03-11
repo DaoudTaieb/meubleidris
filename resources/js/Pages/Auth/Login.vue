@@ -16,19 +16,19 @@ const submit = () => {
 
 <template>
     <Head title="Connexion" />
-    <div class="min-h-screen flex flex-col items-center justify-center bg-[#fdfdfc] px-4">
-        <div class="w-full max-w-md">
+    <div class="min-h-screen min-h-[100dvh] flex flex-col items-center justify-center bg-[#fdfdfc] px-4 py-6 safe-top safe-bottom safe-left safe-right">
+        <div class="w-full max-w-md flex-1 flex flex-col justify-center">
             <!-- Brand Logo / Identity -->
             <div class="flex flex-col items-center mb-12 animate-in fade-in slide-in-from-bottom-4 duration-1000">
                 <div class="w-24 h-24 mb-6 relative">
                     <img :src="'/logo.jpg'" alt="MEUBLE DRISS" class="w-full h-full object-contain rounded-2xl shadow-md" />
                 </div>
-                <h1 class="text-4xl font-extrabold tracking-tighter text-brand-charcoal mb-1">MEUBLE DRISS</h1>
+                <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tighter text-brand-charcoal mb-1 text-center">MEUBLE DRISS</h1>
                 <p class="text-brand-gold font-bold uppercase tracking-[0.2em] text-xs">Meuble & Ameublement</p>
             </div>
 
             <!-- Login Form -->
-            <div class="bg-white p-8 rounded-[2rem] border border-[#e3e3e0] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.05)] animate-in fade-in zoom-in-95 duration-700 delay-200">
+            <div class="bg-white p-5 sm:p-6 md:p-8 rounded-[1.5rem] sm:rounded-[2rem] border border-[#e3e3e0] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.05)] animate-in fade-in zoom-in-95 duration-700 delay-200">
                 <p class="text-center text-[#1b1b18] font-semibold mb-8">Accès Sécurisé</p>
                 
                 <form @submit.prevent="submit">

@@ -37,7 +37,7 @@ const printPage = () => {
     <MainLayout>
         <Head :title="'Relevé ' + fournisseur.nom" />
         
-        <div class="p-4 md:p-8 lg:p-12 print:p-0">
+        <div class="p-4 sm:p-6 md:p-8 lg:p-12 pb-8 print:p-0 safe-bottom">
             <header class="flex flex-col xl:flex-row xl:items-end justify-between gap-8 mb-8 md:mb-12 print:mb-8">
                 <div class="space-y-4">
                     <Link href="/dashboard" class="inline-flex items-center gap-2 text-[#706f6c] text-[10px] font-bold uppercase tracking-widest hover:text-brand-gold transition-colors print:hidden">
@@ -87,8 +87,8 @@ const printPage = () => {
 
             <!-- Ledger Table -->
             <div class="bg-white rounded-[1.5rem] md:rounded-[2rem] border border-[#e3e3e0] shadow-sm overflow-hidden print:border-none print:shadow-none">
-                <div class="overflow-x-auto text-nowrap">
-                    <table class="w-full text-left">
+                <div class="overflow-x-auto table-scroll">
+                    <table class="w-full text-left min-w-[520px]">
                         <thead>
                             <tr class="text-[10px] font-bold text-[#706f6c] uppercase tracking-widest bg-[#fdfdfc] border-b border-[#f0f0f0]">
                                 <th class="px-4 md:px-8 py-5 hidden md:table-cell">Date</th>
@@ -157,8 +157,8 @@ const printPage = () => {
                                                 </div>
                                             </div>
 
-                                            <div class="overflow-x-auto text-nowrap">
-                                                <table class="w-full text-[10px] md:text-xs">
+                                            <div class="overflow-x-auto table-scroll">
+                                                <table class="w-full text-[10px] md:text-xs min-w-[320px]">
                                                     <thead>
                                                         <tr class="border-b border-[#f0f0f0] text-[#706f6c] font-black uppercase tracking-widest">
                                                             <th class="py-3 text-left">Référence</th>

@@ -13,7 +13,7 @@ const toggleSidebar = () => {
 </script>
 
 <template>
-    <div class="min-h-screen bg-[#fdfdfc] flex">
+    <div class="min-h-screen min-h-[100dvh] bg-[#fdfdfc] flex">
         <!-- Sidebar Backdrop (Mobile only) -->
         <div 
             v-if="isSidebarOpen" 
@@ -24,11 +24,11 @@ const toggleSidebar = () => {
         <!-- Sidebar -->
         <aside 
             :class="[
-                'w-72 border-r border-[#e3e3e0] flex flex-col fixed h-full bg-white z-50 transition-transform duration-300 lg:translate-x-0',
+                'w-72 max-w-[85vw] border-r border-[#e3e3e0] flex flex-col fixed h-full max-h-[100dvh] bg-white z-50 transition-transform duration-300 lg:translate-x-0 safe-left safe-top safe-bottom',
                 isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
             ]"
         >
-            <div class="p-8 h-full flex flex-col">
+            <div class="p-4 sm:p-6 lg:p-8 h-full flex flex-col overflow-y-auto">
                 <div class="flex items-center justify-between mb-10">
                     <div class="flex items-center gap-3">
                         <img :src="'/logo.jpg'" alt="MOLKA MODEN" class="w-12 h-12 object-contain rounded-lg shadow-sm" />
@@ -103,7 +103,7 @@ const toggleSidebar = () => {
         <!-- Main Area -->
         <div class="flex-1 flex flex-col min-w-0">
             <!-- Mobile Header -->
-            <header class="lg:hidden flex items-center justify-between px-6 py-4 bg-white border-b border-[#e3e3e0] sticky top-0 z-30 shadow-sm">
+            <header class="lg:hidden flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 bg-white border-b border-[#e3e3e0] sticky top-0 z-30 shadow-sm safe-top safe-left safe-right">
                 <div class="flex items-center gap-3">
                     <img :src="'/logo.jpg'" alt="Logo" class="w-10 h-10 object-contain rounded-xl shadow-sm" />
                     <div class="flex flex-col">
@@ -117,7 +117,7 @@ const toggleSidebar = () => {
             </header>
 
             <!-- Page Content -->
-            <main class="flex-1 lg:ml-72 min-h-screen">
+            <main class="flex-1 flex flex-col min-w-0 lg:ml-72 min-h-screen min-h-[100dvh] overflow-x-hidden safe-left safe-right safe-bottom">
                 <slot />
             </main>
         </div>

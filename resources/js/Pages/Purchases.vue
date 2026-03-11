@@ -19,15 +19,15 @@ const formatDate = (date) => {
     <MainLayout>
         <Head title="Achats" />
         
-        <div class="p-4 md:p-8 lg:p-12">
+        <div class="p-4 sm:p-6 md:p-8 lg:p-12 pb-8 safe-bottom">
             <header class="mb-8 md:mb-12">
                 <h2 class="text-2xl md:text-3xl font-extrabold text-[#1b1b18] tracking-tight mb-1">Journal des Achats</h2>
                 <p class="text-sm md:text-base text-[#706f6c] font-medium">Historique global des factures et bons d'entrée</p>
             </header>
 
             <div class="bg-white rounded-[1.5rem] md:rounded-[2rem] border border-[#e3e3e0] shadow-sm overflow-hidden">
-                <div class="overflow-x-auto text-nowrap">
-                    <table class="w-full text-left">
+                <div class="overflow-x-auto table-scroll">
+                    <table class="w-full text-left min-w-[480px]">
                         <thead>
                             <tr class="text-[10px] font-bold text-[#706f6c] uppercase tracking-widest bg-[#fdfdfc] border-b border-[#f0f0f0]">
                                 <th class="px-4 md:px-8 py-5 hidden md:table-cell">Date</th>
