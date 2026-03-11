@@ -4,6 +4,7 @@ import { ref } from 'vue';
 
 const form = useForm({
     password: '',
+    remember: false,
 });
 
 const submit = () => {
@@ -43,9 +44,24 @@ const submit = () => {
                                 placeholder="••••••••"
                                 class="w-full px-5 py-4 rounded-2xl bg-[#f8f8f7] border border-transparent focus:bg-white focus:border-brand-gold focus:ring-4 focus:ring-brand-gold/10 transition-all duration-200 outline-none text-lg font-mono tracking-widest"
                             />
-                            <div v-if="form.errors.password" class="text-red-500 text-sm font-medium mt-1 ml-1">
-                                {{ form.errors.password }}
+                            <div v-if="form.errors.login" class="text-red-500 text-sm font-medium mt-1 ml-1">
+                                {{ form.errors.login }}
                             </div>
+                        </div>
+
+                        <div class="flex items-center justify-between mb-2 ml-1">
+                            <label class="flex items-center cursor-pointer group">
+                                <div class="relative">
+                                    <input 
+                                        type="checkbox" 
+                                        v-model="form.remember"
+                                        class="sr-only"
+                                    />
+                                    <div class="w-10 h-6 bg-[#e3e3e0] rounded-full shadow-inner transition-colors duration-200" :class="{'bg-brand-gold': form.remember}"></div>
+                                    <div class="absolute inset-y-1 left-1 w-4 h-4 bg-white rounded-full shadow transition-transform duration-200" :class="{'translate-x-4': form.remember}"></div>
+                                </div>
+                                <span class="ml-3 text-sm font-semibold text-[#706f6c] group-hover:text-brand-charcoal transition-colors uppercase tracking-wider">Se souvenir de moi</span>
+                            </label>
                         </div>
 
                         <button 

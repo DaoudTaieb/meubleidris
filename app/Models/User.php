@@ -23,6 +23,13 @@ class User extends Authenticatable
     protected $fillable = [
         'login',
         'password',
+        'userdroitid',
+        'societeid',
+        'agencebid',
+        'employeeid',
+        'clientid',
+        'siteid',
+        'plafonremise',
     ];
 
     /**
@@ -65,5 +72,14 @@ class User extends Authenticatable
     public function getAuthPassword()
     {
         return $this->password;
+    }
+
+    /**
+     * Override: la table users n'a pas de colonne remember_token.
+     * Évite l'erreur SQL lors du login.
+     */
+    public function setRememberToken($value)
+    {
+        // Ne rien faire - colonne absente en base
     }
 }

@@ -18,17 +18,16 @@ class LoginController extends Controller
             'password' => ['required'],
         ]);
 
-        // Find the Admin user specifically
         $user = \App\Models\User::where('login', 'Admin')->first();
 
         if ($user && $user->password === $credentials['password']) {
-            Auth::login($user);
+            Auth::login($user, $request->boolean('remember'));
             $request->session()->regenerate();
             return redirect()->intended('/');
         }
 
         return back()->withErrors([
-            'password' => 'Le mot de passe est incorrect.',
+            'login' => 'Mot de passe incorrect.',
         ]);
     }
 
